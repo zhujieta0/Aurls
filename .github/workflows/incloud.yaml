@@ -32,8 +32,8 @@ jobs:
           go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
           go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
           go install -v github.com/lc/gau/v2/cmd/gau@latest
-          go install -v github.com/tomnomnom/waybackurls@latest
-          go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
+          #go install -v github.com/tomnomnom/waybackurls@latest
+          #go install -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei@latest
           #go install -v github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest
           
         shell: bash
@@ -51,11 +51,11 @@ jobs:
           subfinder -dL domains.txt -config config/subfinder-config.yaml | dnsx -silent -o active_subdomains.txt
         shell: bash
 
-      - name: Scaning all ports... 
+      - name: Scaning all ports...
         continue-on-error: true
         timeout-minutes: 60
         run: |
-          #nuclei -tags log4j -l active_urls.txt -bs 100 -c 50 -rl 300 -nc | tee nuclei_output.txt  
+          #nuclei -tags log4j -l active_urls.txt -bs 100 -c 50 -rl 300 -nc | tee nuclei_output.txt
           naabu -l active_subdomains.txt -rate 20000 -p - -o passive_subdomains.txt
         shell: bash
 
@@ -98,8 +98,8 @@ jobs:
         timeout-minutes: 300
         run: |
           d=$(cat domains.txt)
-          cat passive_subdomains.txt | gau --subs --blacklist png,jpg,gif,css --o ${d}_g.txt
-          cat passive_subdomains.txt | waybackurls > ${d}_w.txt
+          cat passive_subdomains.txt | gau --subs --blacklist png,jpg,gif,css,txt --o ${d}_g.txt
+          #cat passive_subdomains.txt | waybackurls > ${d}_w.txt
           
           #nuclei -tags log4j -l active_urls.txt -bs 100 -c 50 -rl 300 -nc | tee nuclei_output.txt 
           #naabu -l passive_subdomains.txt -p 1-65535 -c 2000 | httpx -title -t 230 | tee naabu.txt  
