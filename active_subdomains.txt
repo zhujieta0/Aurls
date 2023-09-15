@@ -1,2 +1,8 @@
-www.cashbycashapp.com
-cashbycashapp.com
+image.ibood.io
+doc.ibood.io
+worker.ibood.io
+web.ibood.io
+lb.ibood.io
+api.ibood.io
+img.ibood.io
+www.ibood.io
